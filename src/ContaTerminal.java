@@ -5,17 +5,20 @@ public class ContaTerminal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
         try {
+            
             float saldoAtual = cadastro(scanner);
-            System.out.println("Você deseja realizar um saque ou um deposito");
-            String resposta = scanner.next();
-            if (resposta.equals("saque")) {
-                saldoAtual = saque(scanner, saldoAtual);
-            } else if (resposta.equals("deposito")) {
-                saldoAtual = deposito(scanner, saldoAtual);
-            } else {
-                System.out.println("Digite uma função válida");
-            };
-            System.out.println("Seu saldo atualizado é de R$ "+saldoAtual);
+            do {
+                System.out.println("Você deseja realizar um saque ou um deposito");
+                String resposta = scanner.next();
+                if (resposta.equals("saque")) {
+                    saldoAtual = saque(scanner, saldoAtual);
+                } else if (resposta.equals("deposito")) {
+                    saldoAtual = deposito(scanner, saldoAtual);
+                } else {
+                    System.out.println("Digite uma função válida");
+                };
+                System.out.println("Seu saldo atualizado é de R$ "+saldoAtual);
+            } while(continuar(scanner));
         } finally {
             scanner.close();
         }
@@ -61,5 +64,11 @@ public class ContaTerminal {
         }
         System.out.println("Depósito não realizado, tente novamente mais tarde.");
         return saldoAtual;
+    }
+
+    public static boolean continuar(Scanner scanner) {
+        System.out.println("Deseja realizar uma nova operação: sim ou não");
+        String resposta = scanner.next();
+        return resposta.equals("sim") ? true : false;
     }
 }
